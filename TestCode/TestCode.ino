@@ -27,7 +27,7 @@ LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 void setup() {
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
@@ -58,7 +58,7 @@ void loop() {
  // print out the voltage
  Serial.print(voltage); Serial.println(" volts");
  
- // now print out the temperature
+ // now print out the temperature (TMP36 has offset of 0.5V), volt/degree from datasheet
  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
                                                //to degrees ((voltage - 500mV) times 100)
  Serial.print(temperatureC); Serial.println(" degrees C");
