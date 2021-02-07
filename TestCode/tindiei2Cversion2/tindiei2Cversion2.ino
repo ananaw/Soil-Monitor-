@@ -1,4 +1,5 @@
 // To use this code, I installed the I2CSoilMoistureSensor Library provided by Ingo Fischer in Arduino.
+// Also, for the sensor to work, have to connect two pull-up resistors from SDA(A4) and SCK(A13) to +5V each. Use 4.7k resistors.
 #include <I2CSoilMoistureSensor.h>
 #include <Wire.h>
 
