@@ -1,3 +1,4 @@
+// To use Adafruit seesaw library, install the Adafruit Seesaw Library by pressing Ctrl+Shift+I, search for Adafruit Seesaw Library, and install.  
 #include "Adafruit_seesaw.h"
 
 Adafruit_seesaw ss;
