@@ -27,22 +27,15 @@ LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 void setup() {
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
-  // Print a message to the LCD.
-  lcd.print("Hello, World!");
-
 
 }
 
 void loop() {
-  // set the cursor to column 0, line 1
-  // (note: line 1 is the second row, since counting begins with 0):
-  lcd.setCursor(0, 1);
-  // print the number of seconds since reset:
-  lcd.print(millis() / 1000);
+
 
   int sensorValue = analogRead(A0);
   Serial.print("Moisture Prob: "); Serial.println(sensorValue);
@@ -66,9 +59,18 @@ void loop() {
  // now convert to Fahrenheit
  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
  Serial.print(temperatureF); Serial.println(" degrees F");
-  
 
-  delay(1000);
+
+ lcd.setCursor(0,0);
+ lcd.print("Moisture: ");
+ lcd.print(sensorValue);
+ lcd.setCursor(0,1);
+ lcd.print("Temprature: ");
+ lcd.print(temperatureF);
+ lcd.print(" F");
+ 
+  
+ delay(1000);
 
     
 }
