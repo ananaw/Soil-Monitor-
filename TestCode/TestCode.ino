@@ -44,7 +44,7 @@ void loop() {
  //getting the voltage reading from the temperature sensor
  int reading = analogRead(sensorPin);  
  
- // converting that reading to voltage, for 3.3v arduino use 3.3
+
  float voltage = reading * 5.0;
  voltage /= 1024.0; 
  
@@ -60,7 +60,7 @@ void loop() {
  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
  Serial.print(temperatureF); Serial.println(" degrees F");
 
-
+ lcd.clear();
  lcd.setCursor(0,0);
  lcd.print("Moisture: ");
  lcd.print(sensorValue);
