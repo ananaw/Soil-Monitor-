@@ -1,6 +1,6 @@
 #include <LowPower.h>       // Library written by RocketScream 
 
-const int soilMoistPin = A1;
+const int soilMoistPin = A0;
 float soilMoistRaw;
 float soilMoistReal;
 
