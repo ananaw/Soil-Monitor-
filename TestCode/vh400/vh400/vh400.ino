@@ -1,5 +1,6 @@
+#include <LowPower.h>       // Library written by RocketScream 
 
-const int soilMoistPin = A1;
+const int soilMoistPin = A0;
 float soilMoistRaw;
 float soilMoistReal;
 
@@ -10,7 +11,8 @@ void setup() {
   Serial.begin(9600);
   analogReference(EXTERNAL);
   
-
+  // set internal LED as output, used for indicating whether arduino has woken up
+  pinMode(LED_BUILTIN, OUTPUT); 
 }
 
 void loop() {
@@ -38,5 +40,10 @@ void loop() {
   Serial.print(soilMoistReal);
   Serial.println("%");
   delay(1000);
-
+  
+  digitalWrite(LED_BUILTIN, HIGH);  // Turn on LED to indicate Arduino going to sleep.
+  delay(500);
+  
+  // go to deep sleep for 8s, allows power optimization with slowest wake up time.
+  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF); 
 }
