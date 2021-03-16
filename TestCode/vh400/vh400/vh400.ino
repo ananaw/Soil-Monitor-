@@ -18,8 +18,8 @@ void loop() {
   soilMoistRaw = analogRead(soilMoistPin)*(3.3/1024);
   delay(20);
 
-   if (soilMoistRaw < 1.1) {
-    soilMoistRaw = (10 * soilMoistRaw) - 1;
+  if (soilMoistRaw < 1.1) {
+    soilMoistReal = (10 * soilMoistRaw) - 1;
   }
   else if (soilMoistRaw < 1.3) {
     soilMoistReal = (25 * soilMoistRaw) - 17.5;
@@ -34,10 +34,9 @@ void loop() {
     soilMoistReal = (62.5 * soilMoistRaw) - 87.5;
   }
 
-  Serial.println(soilMoistRaw);
-
   Serial.print("Water Content is: ");
-  Serial.println(soilMoistReal);
+  Serial.print(soilMoistReal);
+  Serial.println("%");
   delay(1000);
 
 }
