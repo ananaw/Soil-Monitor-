@@ -18,13 +18,11 @@
  * black wire to GND
  * SCL Green wire to A5
  * SDA white wire to A4
- *
- * written by Ananda Aw and Christopher Pham 
  */
 
 // include the library code:
 #include <LiquidCrystal.h>
-#include <LowPower.h>       // Library written by RocketScream https://github.com/rocketscream/Low-Power 
+#include <LowPower.h>       // Library written by RocketScream 
 
 #define aref_voltage 3.3  // we tie 3.3V to ARef 
 const int soilMoistPin = A1;
@@ -33,6 +31,8 @@ float soilMoistRaw;
 float soilMoistReal;
 float FinalMoist;
 float previousMoist;
+float temperatureC;
+float temperatureF;
 const float alpha = 0.1; // const means value can't be changed, read only
 float z;              // to store previous filtered value
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
@@ -61,7 +61,7 @@ void setup() {
 }
 
 void loop() {
-  for(int i=0; i<=50; i++){     // collect 50 samples of data
+  for(int i=0; i<=50; i++){
     // put your main code here, to run repeatedly:
     soilMoistRaw = analogRead(soilMoistPin)*(3.3/1024);
     delay(20);
@@ -104,12 +104,12 @@ void loop() {
     Serial.print(voltage, 4); Serial.print(" volts"); Serial.print("; Filtered "); Serial.println(y, 4);
      
     // now print out the temperature (TMP36 has offset of 0.5V), volt/degree from datasheet
-    float temperatureC = (y - 0.5) * 100 ;  //converting from 10 mv per degree with 500 mV offset
+    temperatureC = (y - 0.5) * 100 ;  //converting from 10 mv per degree with 500 mV offset
                                             //to degrees ((voltage - 500mV) times 100)
     Serial.print(temperatureC); Serial.println(" C");
   
     // now convert to Fahrenheit
-    float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+    temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
     Serial.print(temperatureF); Serial.println(" F");
     delay(100);
   }
@@ -118,7 +118,8 @@ void loop() {
   //print on 9th col from left and 1st row.
   lcd.setCursor(9,0); lcd.print(FinalMoist);
   lcd.setCursor(14,0); lcd.print("%");
-  lcd.setCursor(2,1); lcd.print(temperatureC);    //3rd col; 2nd row
+  //3rd col; 2nd row
+  lcd.setCursor(2,1); lcd.print(temperatureC); 
   lcd.setCursor(7,1); lcd.print("C;");
   lcd.setCursor(9,1); lcd.print(temperatureF);
   lcd.setCursor(14,1); lcd.print("F");
