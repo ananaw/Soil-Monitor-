@@ -33,7 +33,7 @@ float FinalMoist;
 float previousMoist;
 float temperatureC;
 float temperatureF;
-const float alpha = 0.1; // const means value can't be changed, read only
+const float alpha = 0.9; // const means value can't be changed, read only
 float z;              // to store previous filtered value
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
@@ -82,10 +82,16 @@ void loop() {
       soilMoistReal = (62.5 * soilMoistRaw) - 87.5;
     }
     
-    // do filtering, m is the final value for moisture
-    float FinalMoist = (1-alpha)*soilMoistReal + alpha*previousMoist;
-    previousMoist = FinalMoist;
-    
+    if (i==0){
+      FinalMoist = soilMoistReal;       // initial data equal final data unfiltered.
+      previousMoist = FinalMoist;
+    }
+    else{
+      // do filtering, FinalMoist is the final value for moisture
+      FinalMoist = (1-alpha)*soilMoistReal + alpha*previousMoist;
+      previousMoist = FinalMoist;
+    }
+   
     Serial.println(soilMoistRaw);
     Serial.print("Water Content is: ");
     Serial.println(soilMoistReal);
@@ -96,9 +102,17 @@ void loop() {
     // converting that reading to voltage, for 3.3v arduino use 3.3
     float voltage = reading * aref_voltage / 1024.0; 
     
-    // do filtering, y is the final value for voltage
-    float y = (1-alpha)*voltage + alpha*z;
-    z = y;
+    if (i==0){
+      float y = voltage;
+      z = y;
+    }
+    else{
+      // do filtering, y is the final value for voltage
+      y = (1-alpha)*voltage + alpha*z;
+      z = y;
+    }
+    
+    // debug
     Serial.print("Analog "); Serial.println(reading); 
     // print out the voltage
     Serial.print(voltage, 4); Serial.print(" volts"); Serial.print("; Filtered "); Serial.println(y, 4);
