@@ -35,6 +35,7 @@ float temperatureC;
 float temperatureF;
 const float alpha = 0.9; // const means value can't be changed, read only
 float z;              // to store previous filtered value
+float y;
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 void setup() {
