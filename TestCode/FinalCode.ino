@@ -145,8 +145,6 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);  
   
   
-  // go to deep sleep for 56s, allows power optimization with slowest wake up time.
-  for(int j=0; j<8; j++){
+  // go to deep sleep for 8s, allows power optimization with slowest wake up time.
     LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
-  }
 }
